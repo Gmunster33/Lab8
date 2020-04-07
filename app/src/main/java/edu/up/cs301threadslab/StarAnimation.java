@@ -77,5 +77,18 @@ public class StarAnimation extends Animation {
         int brightness = 255 - (newProgress * 2);
         Star.starPaint.setColor(Color.rgb(brightness, brightness, brightness));
         this.twinkle = false;
+
+        int starCount = 100 + newProgress*9;
+        int numToAdjust = starCount - field.size();
+        while (field.size() != starCount) {
+            if (numToAdjust < 0) {
+                removeStar();
+            }
+            else {
+                addStar();
+            }
+        }
+
+
     }
 }//class StarAnimation

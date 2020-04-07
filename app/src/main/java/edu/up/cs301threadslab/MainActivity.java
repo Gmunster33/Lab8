@@ -7,6 +7,9 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 /**
  * This application displays several animations.  It is used for the threads lab in CS371.
  *
@@ -19,6 +22,7 @@ public class MainActivity extends Activity
     private AnimationView myAV;
     private Button theButton;
     private SeekBar theSeekBar;
+    private Timer timer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,11 +40,20 @@ public class MainActivity extends Activity
         //Let me know when someone adjusts the seekbar
         theSeekBar = (SeekBar)findViewById(R.id.seekBar);
         theSeekBar.setOnSeekBarChangeListener(this);
+
+        AnimationThread animationThread = new AnimationThread(myAV);
+        animationThread.start();
+
+
+        //        timer.schedule(task, 500, 2000);
+
+
     }//onClick
 
     @Override
     public void onClick(View v) {
         myAV.postInvalidate();
+
     }
 
     @Override
