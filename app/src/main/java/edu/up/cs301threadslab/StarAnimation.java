@@ -20,12 +20,14 @@ public class StarAnimation extends Animation {
 
     /* when this is set to 'false' the next animation frame won't twinkle */
     private boolean twinkle = true;
+    private Integer syncObject;
 
     /** ctor expects to be told the size of the animation canvas */
-    public StarAnimation(int initWidth, int initHeight) {
+    public StarAnimation(int initWidth, int initHeight, Integer syncObj) {
         super(initWidth, initHeight);
-        StarAnimationThread starAnimationThread = new StarAnimationThread(this);
+        StarAnimationThread starAnimationThread = new StarAnimationThread(this, syncObj);
         starAnimationThread.start();
+        syncObject = syncObj;
     }
 
     /** whenever the canvas size changes, generate new stars */
@@ -63,14 +65,16 @@ public class StarAnimation extends Animation {
     /** draws the next frame of the animation */
     @Override
     public void draw(Canvas canvas) {
-        for (Star s : field) {
-            s.draw(canvas);
-            if (this.twinkle) {
-                s.twinkle();
+        synchronized (syncObject) {
+            for (Star s : field) {
+                s.draw(canvas);
+                if (this.twinkle) {
+                    s.twinkle();
+                }
             }
-        }
 
-        this.twinkle = true;
+            this.twinkle = true;
+        }
     }//draw
 
     /** the seekbar progress specifies the brightnes of the stars. */

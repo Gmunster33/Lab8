@@ -2,9 +2,11 @@ package edu.up.cs301threadslab;
 
 public class AnimationThread extends Thread {
     AnimationView animationView;
+    Integer syncObject;
 
-    AnimationThread(AnimationView animV) {
+    AnimationThread(AnimationView animV, Integer syncObj) {
         animationView = animV;
+        syncObject = syncObj;
     }
 
     @Override
@@ -12,7 +14,7 @@ public class AnimationThread extends Thread {
 
         for (int i = 0; i < 500; i++) {
 
-            animationView.postInvalidate();
+            synchronized (animationView) {animationView.postInvalidate();}
 
             try {
                 Thread.sleep(50);

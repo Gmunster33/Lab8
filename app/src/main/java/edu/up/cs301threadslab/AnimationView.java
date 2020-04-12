@@ -20,6 +20,8 @@ public class AnimationView extends SurfaceView{
     // track the current dimensions of this surface view
     private int width;
     private int height;
+    public Integer syncObject = new Integer(7);
+
 
     //a list of the animations I'm currently displaying
     private ArrayList<Animation> anims = new ArrayList<Animation>();
@@ -76,9 +78,11 @@ public class AnimationView extends SurfaceView{
     /** draw the animations */
     @Override
     public void draw(Canvas canvas) {
+            synchronized (syncObject) {
             super.draw(canvas);
             for(Animation anim : anims) {
                 anim.draw(canvas);
+            }
        }
 
     }//draw
