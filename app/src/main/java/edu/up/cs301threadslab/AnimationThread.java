@@ -11,7 +11,9 @@ public class AnimationThread extends Thread {
     public void run() {
 
         for (int i = 0; i < 500; i++) {
+
             animationView.postInvalidate();
+
             try {
                 Thread.sleep(50);
             } catch (InterruptedException e) {
